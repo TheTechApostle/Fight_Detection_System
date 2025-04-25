@@ -1,7 +1,7 @@
 import streamlit as st
 
 # Title
-st.title("👋 Welcome to My Streamlit App")
+st.title("👋 Welcome to My Question App")
 
 # Subtitle
 st.subheader("A simple app that greets you")
