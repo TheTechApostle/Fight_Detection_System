@@ -107,6 +107,8 @@
                         </td>
                         <td>
                             <a href="{{ url_for('download_video', filename=vid[1]) }}" class="btn btn-success btn-sm">Download</a>
+                            <a href="{{ url_for('delete_video', id=vid[0]) }}" onclick="return confirm('Are you sure you want to delete the video?')" class="btn btn-sm btn-danger text-white">X</a>
+
                         </td>
                     </tr>
                     {% else %}
