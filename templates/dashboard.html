@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>About - Campus Fight Detection</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background: linear-gradient(to right, #e0f7fa, #fce4ec);
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+       /* .container {
+            background-color: #ffffff;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+        }
+*/
+        h2 {
+            font-weight: bold;
+            color: #00695c;
+        }
+
+        .search-box input {
+            border-radius: 30px;
+            padding-left: 20px;
+        }
+
+        .table th, .table td {
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        video {
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .btn-success {
+            border-radius: 20px;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .no-results {
+            font-size: 1.1rem;
+            color: #999;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+    <div class="container">
+        <a class="navbar-brand" href="/">Fight Detection Dashboard</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="/benefits">Benefits</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-item-center flex-wrap">
+            <h2 class="text-center mb-4 ml-4">🎥 Campus Fight Recordings</h2>
+            
+        </div>
+
+        <!-- Search Box -->
+        <form method="GET" class="search-container">
+            <div class="input-group search-box">
+                <input type="text" name="search" class="form-control" placeholder="🔍 Search by day, month, or filename..." value="{{ request.args.get('search', '') }}">
+                <button class="btn btn-outline-primary" type="submit">Search</button>
+            </div>
+        </form>
+
+        <!-- Video Table -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover bg-white">
+                <thead class="table-primary">
+                    <tr>
+                        <th>#</th>
+                        <th>Date & Time</th>
+                        <th>Preview</th>
+                        <th>Download</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for vid in videos %}
+                    <tr>
+                        <td>{{ vid[0] }}</td>
+                        <td>{{ vid[2] }}</td>
+                        <td>
+                            <video width="250" controls>
+                                <source src="{{ url_for('static', filename='campusRecordedFight/' + vid[1]) }}" type="video/mp4" />
+                                Your browser does not support the video tag.
+                            </video>
+                        </td>
+                        <td>
+                            <a href="{{ url_for('download_video', filename=vid[1]) }}" class="btn btn-success btn-sm">Download</a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center no-results">No videos recorded yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
